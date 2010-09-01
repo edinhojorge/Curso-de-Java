@@ -1,0 +1,197 @@
+Roteiro para montagem da apresentação e da apostila
+Contém objetivo, tópicos para alcançar o objetivo e alguns exercícios
+
+
+
+Tarefas
+
+
+Entender as diferenças entre os modificadores de visibilidade
+Utilizar os modificadores de visibilidade
+Ser capaz de entender um aplicativo simples com 2 camadas com o uso dos modificadores de visibilidade
+
+Tópicos
+
+Classe Java
+    Estrutura de uma classe
+        Atributos
+        Métodos
+        Método especial main
+
+package br.com.java4linux.main;
+
+public class Main {
+	public static void main(String args[]){
+		
+		System.out.println("Inicio da execução");
+		Main main = new Main();
+		System.out.println("Chamando método toString" + main);
+		System.out.println("Fim da execução");
+		
+	}
+	
+	@Override
+	private String toString(){
+		return "Classe principal";
+	}
+}
+
+
+Modificadores de acesso
+    private
+    public
+
+Exercícios
+    Criando uma classe Java e executando
+	Crie uma classe Java que mostre o seu nome na saída.
+
+package br.com.java4linux.main;
+
+public class Main {
+	public static void main(String args[]){
+		System.out.println("4Linux");
+	}
+}
+
+
+Herança básica de classes
+    Classe Object
+Todas as classes são filhas da classe Object
+Tipos primários (int, char, byte, etc) náo são classes e não herdam Object.
+Existem classes para cada tipo primário (Integer, Byte, etc) e herdam Object
+ 
+
+    O que é herdado?
+Ao criar uma classe filha, ela herda todas as características da classe pai qua não sejam privados, com exceção dos construtores e algumas regras de visibilidade, que veremos um pouco mais adiante.
+
+Herança básica em Java
+    A palavra reservada extends
+Para informar outra classe pai, utilizamos a palavra chave extends seguida do nome da classe pai.
+public class Mamifero extends Animal
+
+    Tipo de classe abstrata
+Uma classe abstrata pode ser considerada uma classe genérica quando falamos em herança, e nem todos os métodos precisam ser codificados
+Ex.: Uma classe Carro, que possui um método aceleracao, porém somente as classes filhas (Gol, Corsa, Fusca) sabem como funciona a própria aceleração.
+Não podemos instanciar diretamente uma classe abstrata.
+Podemos atribuir objetos de classes concretas diretamente a uma variavel do tipo da classe pai.
+Ex. Carro car = new Fusca();
+Collection col = new ArrayList();
+
+    O que não é abstrato
+A classe abstrata também possui metodos nao abstratos, que vamos considerar metodos concretos.
+
+
+    Herança múltipla x Java (comentar, mas não aprofundar neste momento se possível)
+Em Java, quando vamos herdar só podemos escolher uma classe como mãe.
+A herança múltipla é comum em OO, mas Java não fornece suporte.
+
+
+
+Exercícios
+    Exemplo didático: Animal → Mamífero → ? (Boi / Cavalo / Cachorro / Baleia)
+    Quais métodos e atributos Animal e Mamífero possuem?
+    Exemplo do dia a dia: JFrame → TelaBase → CadastroCliente / CadastroFornecedor
+
+
+A classe JFrame é uma implementação de uma janela gráfica. É possível usá-la como classe base no desenvolvimento de telas de um sistema.
+A classe JFrame é uma classe concreta e podemos instancia-la diretamente
+JFrame janela = new JFrame(); 
+    (Explicar a classe JFrame)
+
+Pacotes
+    Organizar um sistema em pacotes
+    Camadas de um sistema
+
+Visibilidade
+    Tipos de visibilidade / Tabela
+
+
+    Diferenças
+    A recomendação de visibilidade
+	Mantenha os atributos e métodos o mais restrito sempre que possível. 
+
+
+Herança e modificadores protected e default
+Até agora
+
+
+Exercícios
+    Identificar as diferenças
+    Qual a recomendação?
+    Além da aula: identificar classes de APIs nativas que façam uso de protected e default
+
+Usos práticos de Herança com visibilidade
+    Singleton
+    DAO
+
+
+Laboratório
+
+Iremos criar um mini aplicativo que consulta temperatura de cidades, com separação simples de camadas (visão e negócio), e com uma classe principal para execução do aplicativo. 
+Em uma primeira etapa, teremos duas classes abstratas base, uma para a camada de negócio e uma para a camada de visão. Após a criação destas classes, iremos criar classes filhas concretas para implementação das funcionalidades específicas de temperatura. Ao final, será criada a classe principal Main para execução do aplicativo.
+
+Será fornecida uma classe de visão que mostra o resultado do negócio em uma janela Java (JFrame).
+Para que fique um aplicativo funcional, será fornecido após a aula uma integração com a API de clima do Google, mostrando a temperatura em tempo real. 
+
+1-Criar uma estrutura de pacotes que separe a visão, negócio e a classe de execução do sistema
+    - o prefixo de todos os pacotes deve ser br.com.java4linux
+    - Como sugestão, pode ser main, visao e negocio
+    - É uma boa prática usar como prefixo a url invertida da empresa.
+
+2-Criar as classes BaseVisao  e BaseNegocio. 
+    - organize as classes de acordo com o item 1.
+    - essas classes devem ser abstratas.
+
+3-Para a classe BaseVisao:
+    - declarar os metodos:
+        abstract protected BaseNegocio getNegocio();
+        abstract public void mostrar();
+    
+Para a classe BaseNegocio:
+    - declarar o método
+        abstract public String executarNegocio(String pedido);
+
+4-Crie  a classe TemperaturaNegocio no mesmo pacote da classe BaseNegocio, e faça-a ser filha de BaseNegocio
+    - implemente o método executarNegocio, retornando uma String com informações de temperatura de acordo com uma cidade passada como parâmetro.
+    ex.: if (pedido.equals(“Sao Paulo”)) return “10 graus”;
+    - Coloque mais de uma cidade para resultados diferentes.
+
+5-Crie a classe ConsoleTemperaturaVisao no mesmo pacote da classe BaseVisao, e faça-a ser filha de BaseVisao
+    - Crie um atributo privado de nome cidade
+    - crie metodos de acesso publicos (getCidade,setCidade) para o atributo cidade
+    - implemente o método getNegocio, fazendo-o retornar uma nova instância de TemperaturaNegocio.
+    - Implemente o método mostrar da seguinte forma:
+        System.out.println(getNegocio().executarNegocio(getCidade())); 
+
+
+-Criar uma classe que servirá para execução do aplicativo.
+    - o nome da classe deve ser Main
+    - o método especial main deve ser escrito na classe, conforme segue:
+    
+        - criação de uma instância de ConsoleTemperaturaVisao
+        - atribuir uma cidade através do método setCidade
+        - executar a chamada do método mostrar
+
+
+
+
+
+
+Questões após o laboratório
+
+Por que o método getNegocio da classe BaseVisao ficou como protected?
+
+Pode haver uma classe entre BaseVisao e suas classes filhas JanelaTemperaturaVisao e ConsoleTemperaturaVisao. Suponha que esta classe tenha o nome TemperaturaVisao, como ficaria esta classe?
+
+Por qual motivo que, mesmo instanciando a classe JanelaTemperaturaVisao ou ConsoleTemperaturaVisao da classe Main, não é possível acessar o método getNegocio?
+
+Altere a classe Main para que a mesma faça tratamento de parâmetros.
+
+Utilize a classe disponibilizada GoogleTemperaturaNegocio nas visões para ter a temperatura em tempo real. É necessário configurar o jar com a biblioteca JSON de http://www.json.org/java/.
+
+Links
+http://www.json.org/java/
+
+Referências: UML Guia do Usuário
+
+
