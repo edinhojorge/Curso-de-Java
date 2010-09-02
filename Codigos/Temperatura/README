@@ -1,0 +1,28 @@
+Aplicativo em duas camadas com funcionamento básico de classes java.
+
+O aplicativo acessa a camada de negócio para buscar a temperatura atual.
+Como dado, uma das implementações de negócio está hard coded (TemperaturaNegocio), 
+equanto que a outra implementação busca as informações em tempo real no Google
+através da API GoogleWeatherAPI.
+
+
+Tópicos abordados para aula/laboratório:
+
+Classe simples
+Método main (classe de execução)
+Classe Abstrata Generica
+Classe Concreta Especializa
+Camadas Modelo e Visão
+Métodos estáticos
+Métodos dinâmicos
+Introdução a encapsulamento
+Visibilidade (private, protected e public)
+Acesso a url e tratamento do retorno XML com objetos JSON
+
+Usos adicionais
+Aumentar o grau de coesao adicionando uma classe abstrata a mais acima das visões de temperatura (gerar um novo projeto para tal)
+Adicionar a camada de controle
+Adicionar a camada de dados
+Fazer controle de exceções
+Fazer uso de interfaces
+
